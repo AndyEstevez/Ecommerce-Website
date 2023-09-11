@@ -1,37 +1,36 @@
-import { mongooseConnect } from "@/lib/mongoose";
-import { Product } from "@/models/Product";
+import {Product} from "@/models/Product";
+import {mongooseConnect} from "@/lib/mongoose";
 
-export default async function handle(req, res){
-    const {method} = req;
-    await mongooseConnect();
+export default async function handle(req, res) {
+  const {method} = req;
+  await mongooseConnect();
 
-    if(method === 'GET'){
-        if(req.query?.id){ // get one product
-            res.json(await Product.findOne({_id:req.query.id}));
-        }
-        else{ // get all products
-            res.json(await Product.find());
-        }
+  if (method === 'GET') {// get one product
+    if (req.query?.id) {
+      res.json(await Product.findOne({_id:req.query.id}));
+    } else {// get all products
+      res.json(await Product.find());
     }
+  }
 
-    if(method === 'POST'){
-        const {title, description, price,images} = req.body;
-        const productDoc = await Product.create({
-            title, description, price, images
-        });
-        res.json(productDoc);
-    }
+  if (method === 'POST') {
+    const {title,description,price,images,category,properties} = req.body;
+    const productDoc = await Product.create({
+      title,description,price,images,category,properties,
+    })
+    res.json(productDoc);
+  }
 
-    if(method === 'PUT'){
-        const {title, description, price, images, _id} = req.body
-        await Product.updateOne({_id}, {title, description, price, images});
-        res.json(true);
-    }
+  if (method === 'PUT') {
+    const {title,description,price,images,category,properties,_id} = req.body;
+    await Product.updateOne({_id}, {title,description,price,images,category,properties});
+    res.json(true);
+  }
 
-    if(method === 'DELETE'){
-        if(req.query?.id){
-            await Product.deleteOne({_id:req.query.id});
-            res.json(true);
-        }
+  if (method === 'DELETE') {
+    if (req.query?.id) {
+      await Product.deleteOne({_id:req.query?.id});
+      res.json(true);
     }
+  }
 }
