@@ -1,9 +1,10 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { withSwal } from 'react-sweetalert2';
 
 // categories page
-export default function Categories() {
+function Categories({swal}){
     const [name, setName] = useState('');
     const [categories, setCategories] = useState([]);
     const [parentCategory, setParentCategory] = useState('');
@@ -42,6 +43,27 @@ export default function Categories() {
         setParentCategory(category.parent?._id)
     }
 
+    // delete category
+    function deleteCategory(category){
+        swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to delete ${category.name}?`,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Yes, Delete!',
+            confirmButtonColor: '#d55',
+            reverseButtons: true
+        }).then(async result => {
+            if(result.isConfirmed) { // delete was selected
+                const {_id} = category;
+                await axios.delete('/api/categories?_id='+_id);
+                fetchCategories();
+            }
+        }).catch(error => {
+
+        })
+    }
+
     return (
         <Layout>
             <h1>Categories</h1>
@@ -76,7 +98,8 @@ export default function Categories() {
                             <td>{category?.parent?.name}</td>
                             <td>
                                 <button onClick={() => editCategory(category)} className="btn-primary mr-1">Edit</button>
-                                <button className="btn-primary">Delete</button>
+                                <button onClick={() => deleteCategory(category)} 
+                                className="btn-primary">Delete</button>
                             </td>
                         </tr>
                     ))}
@@ -85,3 +108,8 @@ export default function Categories() {
         </Layout>
     )
 }
+
+
+export default withSwal(({swal}, ref) => (
+    <Categories swal={swal}/>
+));
