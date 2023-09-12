@@ -145,7 +145,7 @@ function Categories({swal}){
                             value={property.values} 
                             onChange={ev => handlePropertyValueChange(index, property, ev.target.value)} 
                             placeholder="values, comma separated"/>
-                            <button onClick={() => removeProperty(index)} type="button" className="btn-default">Remove</button>
+                            <button onClick={() => removeProperty(index)} type="button" className="btn-red">Remove</button>
                         </div>
                     ))}
                 </div>
@@ -178,9 +178,9 @@ function Categories({swal}){
                                 <td>{category.name}</td>
                                 <td>{category?.parent?.name}</td>
                                 <td>
-                                    <button onClick={() => editCategory(category)} className="btn-primary mr-1">Edit</button>
+                                    <button onClick={() => editCategory(category)} className="btn-default mr-1">Edit</button>
                                     <button onClick={() => deleteCategory(category)} 
-                                    className="btn-primary">Delete</button>
+                                    className="btn-red">Delete</button>
                                 </td>
                             </tr>
                         ))}
