@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components"
+import {primary} from '@/lib/colors'
 
 export const ButtonStyle = css`
-    background-color: #5542F6;
+    background-color: ${primary};
     border: 0;
     padding: 5px 15px;
     border-radius: 5px;
@@ -9,6 +10,8 @@ export const ButtonStyle = css`
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+    font-weight: 500;
+    font-family: 'Roboto';
     svg{
         height: 16px;
         margin-right: 5px;
@@ -22,10 +25,15 @@ export const ButtonStyle = css`
         color: #fff;
         border: 1px solid #fff;
     `}
-    ${props => props.primary && css `
-        background-color: #5542F6;
-        border: 1px solid #5542F6;
+    ${props => props.primary && !props.outline && css `
+        background-color: ${primary};
+        border: 1px solid  ${primary};
         color: #fff;
+    `}
+    ${props => props.primary && props.outline && css `
+        background-color: transparent;
+        border: 1px solid ${primary};
+        color: #5542F6;
     `}
     ${props => props.size === 'l' && css`
         font-size: 1.2rem;
