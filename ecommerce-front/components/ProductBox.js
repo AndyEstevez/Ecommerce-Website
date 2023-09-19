@@ -36,15 +36,25 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-    display: flex;
+    display: block;
+    @emedia screen and (min-width: 768px){
+        display: flex;
+        gap: 5px;
+    }
     align-items: center;
     justify-content: space-between;
     margin-top: 2px;
 `;
 
 const Price = styled.div`
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: right;
+    @emedia screen and (min-width: 768px){
+        font-size: 1.5rem;
+        font-weight: 500;
+        text-align: left;
+    }
 `;
 
 export default function ProductBox({_id, title, description, price, images}){
@@ -64,7 +74,7 @@ export default function ProductBox({_id, title, description, price, images}){
                     <Price>
                         ${price}
                     </Price>
-                    <Button onClick={() => addProduct(_id)} primary outline>
+                    <Button block onClick={() => addProduct(_id)} primary outline>
                         Add to cart
                     </Button>
                 </PriceRow>
